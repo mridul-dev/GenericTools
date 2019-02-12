@@ -1,0 +1,37 @@
+
+:: Full Backup -> 
+
+Case-1: 
+Initial File Size = 2.1 GB
+
+$ ls -larth /var/log/random.log
+-rw-r--r-- 1 root root 2.1G Aug 12 12:41 /var/log/random.log
+
+Result:
+Time taken for Full Backup of file size (2.1 GB) = 1 min 53 seconds 
+
+$./file-backup.sh backup random.log
+## Starting Full Backup @  12:49:21:103477547 ##
+..FULL Backup completed successfully @  12:51:14:663420688
+
+In case if the initial file size ~ 200GB, then
+Full Backup time taken ~ 188.33 minutes (3 hours 9 mins) 
+Considering HDD with average rsync speed : 19.83 MB/s
+
+
+::Incremental File Snapshots ->
+
+Case-1 : 
+For 1 MB of data added every 1 second to the original log i.e. random.log
+
+$./file-backup.sh backup random.log
+..Incremental Backup @  12:10:36:6280401880
+..Incremental Backup Completed @  12:10:36:63526858
+
+Result : 
+Time taken for Incremental File Backup = 7228392 nanosecond i.e 7.228 milliseconds .
+
+In case if the 100 MB of data is added every 5 seconds to the original log file, then
+Incremental Backup time taken = 722.8 milliseconds
+
+Incremental Backup file names are suffixed with epcoh time.
